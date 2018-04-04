@@ -15,10 +15,10 @@ object capoRolando{
 		return hechiceria
 	}
 	method valorLucha(){
-		return equipo.sum({objeto=>objeto.valorLuchaDado()})+lucha
+		return equipo.sum({objeto=>objeto.valorLuchaDado(self)})+lucha
 	}
 	method valorHechiceria(){
-		return equipo.sum({objeto=>objeto.valorHechiceriaDado()})+ hechiceria
+		return equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
 	}
 	method entrenarMente(){
 		hechiceria+=1
