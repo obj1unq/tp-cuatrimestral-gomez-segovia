@@ -1,0 +1,30 @@
+import tpGrupal.*
+
+test "Rolando comienza con 3 puntos básicos de lucha y 1 de hechicería" {
+	assert.equals(3,capoRolando.valorLucha())
+	assert.equals(1,capoRolando.valorHechiceria())
+}
+
+test "Rolando incrementa 1 punto básico de hechicería"{
+	capoRolando.entrenarMente()
+	assert.equals(3,capoRolando.valorLucha())
+	assert.equals(2,capoRolando.valorHechiceria())
+}
+
+test "Rolando obtiene el Collar Divino"{
+	capoRolando.equipar(collarDivino)
+	assert.equals(4,capoRolando.valorLucha())
+	assert.equals(2,capoRolando.valorHechiceria())
+}
+
+test "Rolando obtiene el Libro de Hechizos"{
+	capoRolando.equipar(libroDeHechizos)
+	assert.equals(3,capoRolando.valorLucha())
+	assert.equals(2,capoRolando.valorHechiceria())
+}
+
+test "Rolando obtiene la Espada del Destino"{
+	capoRolando.equipar(espadaDelDestino)
+	assert.equals(6,capoRolando.valorLucha())
+	assert.equals(1,capoRolando.valorHechiceria())
+}
