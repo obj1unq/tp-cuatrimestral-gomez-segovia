@@ -7,6 +7,7 @@ object capoRolando{
 	//method equipo(){
 	//	return equipo
 	//}
+	
 	method valorLuchaBase(){
 		return lucha
 	}
@@ -20,42 +21,30 @@ object capoRolando{
 		return equipo.sum({objeto=>objeto.valorHechiceriaDado()})+ hechiceria
 	}
 	method entrenarMente(){
-		hechiceria=hechiceria + 1
+		hechiceria+=1
 	}
 	method entrenarCuerpo(){
-		lucha=lucha + 1
+		lucha+=1
 	}
 	method equipar(objeto){
 		equipo.add(objeto)
 	}
 }
 
+//Si es un return, se puede reemplazar por un igual
 object espadaDelDestino{
-	method valorLuchaDado(usuario){
-		return 3
-	}
-	method valorHechiceriaDado(usuario){
-		return 0
-	}
+	method valorLuchaDado(usuario)=3
+	method valorHechiceriaDado(usuario)=0
 }
 
 object libroDeHechizos{
-	method valorLuchaDado(usuario){
-		return 0
-	}
-	method valorHechiceriaDado(usuario){
-		return usuario.hechiceriaBase()
-	}
+	method valorLuchaDado(usuario)=0
+	method valorHechiceriaDado(usuario)=usuario.ValorHechiceriaBase()
 }
 
 object collarDivino{
-	method valorLuchaDado(){
-		return 1
-	}
-	method valorHechiceriaDado(){
-		return 1
-	}
+	method valorLuchaDado(usuario)=1
+	method valorHechiceriaDado(usuario)=1
 }
-
 
 
