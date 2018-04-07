@@ -61,6 +61,7 @@ object espejoFantastico{
 	method mejorArtefacto(){
 		elMejor=equipamiento.findOrDefault({artefacto=>!(artefacto==self)and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})
 	}
+	//suma las caracteristicas de los objetos o artefactos 
 	method prueba(){
 		maxPoder=equipamiento.max({objeto=>objeto.valorLuchaDado()+objeto.valorHechiceriaDado()})
 	}
