@@ -47,4 +47,22 @@ object collarDivino{
 	method valorHechiceriaDado(usuario)=1
 }
 
+object espejoFantastico{
+	var usuario
+	var equipamiento=usuario.equipo()
+	var maxPoder
+	var elMejor
+	
+	method quienLoPosee(capo){
+		usuario=capo
+	}
+	
+	
+	method mejorArtefacto(){
+		elMejor=equipamiento.findOrDefault({artefacto=>!(artefacto==self)and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})
+	}
+	method prueba(){
+		maxPoder=equipamiento.max({objeto=>objeto.valorLuchaDado()+objeto.valorHechiceriaDado()})
+	}
+}
 
