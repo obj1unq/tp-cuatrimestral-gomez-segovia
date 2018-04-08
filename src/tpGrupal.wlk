@@ -30,7 +30,7 @@ object capoRolando{
 		equipo.add(objeto)
 	}
 	method encontrar(objeto){
-		objeto.efecto(self.bando())
+		objeto.efecto(self)
 	}
 	method bando(){
 		return bando
@@ -73,13 +73,20 @@ object espejoFantastico{
 }
 
 object cofrecitoDeOro{
-	method efecto(bando){
-		bando.ganarOro()
+	method efecto(capo){
+		capo.bando().ganarOro()
 	}
 }
 object cumuloDeCarbon{
-	method efecto(bando){
-		bando.ganarRecursos(50)
+	method efecto(capo){
+		capo.bando().ganarRecursos(50)
+	}
+}
+
+object viejoSabio{
+	method efecto(capo){
+		capo.entrenarMente()
+		capo.entrenarCuerpo()
 	}
 }
 
