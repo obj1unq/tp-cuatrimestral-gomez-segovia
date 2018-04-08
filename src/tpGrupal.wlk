@@ -3,7 +3,7 @@ object capoRolando{
 	var property equipo= []
 	var lucha=3
 	var hechiceria=1
-	
+	var bando=bandoDelSur
 	//method equipo(){
 	//	return equipo
 	//}
@@ -28,6 +28,12 @@ object capoRolando{
 	}
 	method equipar(objeto){
 		equipo.add(objeto)
+	}
+	method encontrar(objeto){
+		objeto.efecto(self.bando())
+	}
+	method bando(){
+		return bando
 	}
 }
 
@@ -63,6 +69,34 @@ object espejoFantastico{
 	//suma las caracteristicas de los objetos o artefactos 
 	method prueba(){
 		maxPoder=equipamiento.max({objeto=>objeto.valorLuchaDado()+objeto.valorHechiceriaDado()})
+	}
+}
+
+object cofrecitoDeOro{
+	method efecto(bando){
+		bando.ganarOro()
+	}
+}
+object cumuloDeCarbon{
+	method efecto(bando){
+		bando.ganarRecursos(50)
+	}
+}
+
+object bandoDelSur{
+	var tesoro=0
+	var reservaDeMateriales=0
+	method tesoro(){
+		return tesoro
+	}
+	method reservadeMateriales(){
+		return reservaDeMateriales
+	}
+	method ganarOro(_numero){
+		tesoro= tesoro+_numero
+	}
+	method ganarRecursos(_numero){
+		reservaDeMateriales= reservaDeMateriales+50
 	}
 }
 
