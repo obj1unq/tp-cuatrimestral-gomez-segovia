@@ -51,16 +51,15 @@ object espejoFantastico{
 	var usuario
 	var equipamiento=usuario.equipo()
 	var maxPoder
-	var elMejor
+	var elMejor=equipamiento.findOrDefault({artefacto=>!(artefacto==self)and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})
 	
 	method quienLoPosee(capo){
 		usuario=capo
 	}
+	method valorLuchaDado()=elMejor.valorLuchaDado()
+	method valorHechiceriaDado()=elMejor.valorHechiceriaDado()
 	
 	
-	method mejorArtefacto(){
-		elMejor=equipamiento.findOrDefault({artefacto=>!(artefacto==self)and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})
-	}
 	//suma las caracteristicas de los objetos o artefactos 
 	method prueba(){
 		maxPoder=equipamiento.max({objeto=>objeto.valorLuchaDado()+objeto.valorHechiceriaDado()})
