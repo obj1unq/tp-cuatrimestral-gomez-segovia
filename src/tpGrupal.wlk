@@ -11,7 +11,7 @@ object capoRolando{
 	method valorLuchaBase(){
 		return lucha
 	}
-	method ValorHechiceriaBase(){
+	method valorHechiceriaBase(){
 		return hechiceria
 	}
 	method valorLucha(){
@@ -107,3 +107,34 @@ object bandoDelSur{
 	}
 }
 
+object armadura{
+	var property refuerzo = noReforzar
+	
+	method valorLuchaDado(_capo) = 2 + refuerzo.valorLuchaDado(_capo)
+	
+	method valorHechiceriaDado(_capo) = 0 + refuerzo.valorHechiceriaDado(_capo)
+	
+	method reforzar(_refuerzo){
+		refuerzo = _refuerzo
+	}
+}	
+
+object cotaDeMalla{
+	method valorLuchaDado(_capo) = 1
+	method valorHechiceriaDado(_capo) = 0
+}
+	
+object bendicion{
+	method valorLuchaDado(_capo) = 0
+	method valorHechiceriaDado(_capo) = 1
+}
+	
+object hechizo{
+	method valorLuchaDado(_capo) = 0
+	method valorHechiceriaDado(_capo) = if (_capo.valorHechiceriaBase()>3) 2 else 0
+}
+	
+object noReforzar{
+	method valorLuchaDado(_capo) = 0
+	method valorHechiceriaDado(_capo) = 0
+}
