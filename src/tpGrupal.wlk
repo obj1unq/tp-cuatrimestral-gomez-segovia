@@ -57,13 +57,17 @@ object espejoFantastico{
 	var usuario
 	var equipamiento=usuario.equipo()
 	var maxPoder
-	var elMejor=equipamiento.findOrDefault({artefacto=>!(artefacto==self)and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})
+
+method elMejor()=if(!self.equipamiento().isEmpty()){equipamiento.find({artefacto=>!(artefacto==self) and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
 	
+	method equipamiento(){
+		return equipamiento
+	}
 	method quienLoPosee(capo){
 		usuario=capo
 	}
-	method valorLuchaDado()=elMejor.valorLuchaDado()
-	method valorHechiceriaDado()=elMejor.valorHechiceriaDado()
+	method valorLuchaDado()=self.elMejor().valorLuchaDado()
+	method valorHechiceriaDado()=self.elMejor().valorHechiceriaDado()
 	
 	
 	//suma las caracteristicas de los objetos o artefactos 
