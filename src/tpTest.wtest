@@ -28,3 +28,6 @@ test "Rolando obtiene la Espada del Destino"{
 	assert.equals(6,capoRolando.valorLucha())
 	assert.equals(1,capoRolando.valorHechiceria())
 }
+
+
+

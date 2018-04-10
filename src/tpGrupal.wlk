@@ -54,11 +54,11 @@ object collarDivino{
 }
 
 object espejoFantastico{
-	var usuario
-	var equipamiento=usuario.equipo()
-	var maxPoder
-
-method elMejor()=if(!self.equipamiento().isEmpty()){equipamiento.find({artefacto=>!(artefacto==self) and maxPoder==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
+	var sumatoria=[]
+	var property usuario
+	var equipamiento
+	
+	method elMejor()=if(!self.equipamiento().isEmpty()){equipamiento.find({artefacto=>!(artefacto==self) and self.elMasAlto()==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
 	
 	method equipamiento(){
 		return equipamiento
@@ -66,14 +66,20 @@ method elMejor()=if(!self.equipamiento().isEmpty()){equipamiento.find({artefacto
 	method quienLoPosee(capo){
 		usuario=capo
 	}
-	method valorLuchaDado()=self.elMejor().valorLuchaDado()
-	method valorHechiceriaDado()=self.elMejor().valorHechiceriaDado()
-	
-	
-	//suma las caracteristicas de los objetos o artefactos 
-	method prueba(){
-		maxPoder=equipamiento.max({objeto=>objeto.valorLuchaDado()+objeto.valorHechiceriaDado()})
+	method equipos(unCapo){
+		equipamiento=unCapo.equipo()
 	}
+	
+	method maximoPoder(){
+		self.equipamiento().forEach({obj=>sumatoria.add(obj.valorLuchaDado()+obj.valorHechiceriaDado())})
+	}
+	method elMasAlto(){
+		return sumatoria.max()
+	}
+	method valorLuchaDado()=if(!equipamiento.isEmpty()) self.elMejor().valorLuchaDado() else 0
+	method valorHechiceriaDado()=if(!equipamiento.isEmpty())self.elMejor().valorHechiceriaDado() else 0
+	
+	
 }
 
 object cofrecitoDeOro{
