@@ -17,6 +17,8 @@ test "Rolando obtiene el Collar Divino"{
 	assert.equals(2,capoRolando.valorHechiceria())
 }
 
+//CORRECCION: Este test no andaba! 
+//
 test "Rolando obtiene el Libro de Hechizos"{
 	capoRolando.equipar(libroDeHechizos)
 	assert.equals(3,capoRolando.valorLucha())
@@ -28,6 +30,8 @@ test "Rolando obtiene la Espada del Destino"{
 	assert.equals(6,capoRolando.valorLucha())
 	assert.equals(1,capoRolando.valorHechiceria())
 }
+
+//CORRECCION: Falta testear la armadura y el espejo
 
 
 
