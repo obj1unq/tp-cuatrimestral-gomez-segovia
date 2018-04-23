@@ -12,18 +12,14 @@ object capoRolando{
 	//	return equipo
 	//}
 	
-	method valorLuchaBase(){
-		return lucha
-	}
-	method valorHechiceriaBase(){
-		return hechiceria
-	}
-	method valorLucha(){
-		return equipo.sum({objeto=>objeto.valorLuchaDado(self)})+lucha
-	}
-	method valorHechiceria(){
-		return equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
-	}
+	method valorLuchaBase()= lucha
+	
+	method valorHechiceriaBase()= hechiceria
+	
+	method valorLucha()= equipo.sum({objeto=>objeto.valorLuchaDado(self)})+lucha
+	
+	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
+	
 	method entrenarMente(){
 		hechiceria+=1
 	}
@@ -36,9 +32,8 @@ object capoRolando{
 	method encontrar(objeto){
 		objeto.efecto(self)
 	}
-	method bando(){
-		return bando
-	}
+	method bando()= bando
+	
 }
 
 //Si es un return, se puede reemplazar por un igual
@@ -49,9 +44,8 @@ object espadaDelDestino{
 
 object libroDeHechizos{
 	method valorLuchaDado(usuario)=0
-	//CORRECCION: acá está el motivo por el cual el test no anda. el mensaje
-	//CORRECCION: se debe llamar valorHechiceriaBase() (en minuscula)
-	method valorHechiceriaDado(usuario)=usuario.ValorHechiceriaBase()
+	
+	method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
 }
 
 object collarDivino{
@@ -106,7 +100,7 @@ object espejoFantastico{
 object cofrecitoDeOro{
 	method efecto(capo){
 		//CORRECCION: NO anda, hay que pasar el parametro
-		capo.bando().ganarOro()
+		capo.bando().ganarOro(100)
 	}
 }
 object cumuloDeCarbon{
@@ -136,7 +130,7 @@ object bandoDelSur{
 	}
 	//CORRECCION: si le paso un parametro, supongo que quiero sumar ese parámetro y no hardcodear el 50.
 	method ganarRecursos(_numero){
-		reservaDeMateriales= reservaDeMateriales+50
+		reservaDeMateriales= reservaDeMateriales+_numero
 	}
 }
 
