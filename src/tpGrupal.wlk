@@ -59,16 +59,12 @@ object espejoFantastico{
 	//CORRECCION: La sumatoria es algo que se necesita como valor temporal. Entonces está mal que sea un atributo del objeto.
 	//CORRECCION: Los atributos son cosas que el objeto debe acordarse a lo largo del tiempo.
 	//CORRECCION: Ademas, cuando se actualiza? 
-//var sumatoria=[]
-	
 	
 	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
 	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
 	//CORRECCION: el objeto buscado no depende de cada elemento individualmente, si no de todos los objetos de la coleccion (para saber si un obejto es maximo hay que evaluar todos los elementos, no solo el actual)
 	//CORRECCION: no conviene usar un find. En este caso conviene usar el mensaje max(transformer) o una combinacion de map(transformer) y max().
 	//CORRECCION: Previamente, podrías haber filtrado la coleccion con un filter para remover self 
-//method elMejor(usuario)=if(!self.equipamiento(usuario).isEmpty()){self.equipamiento(usuario).find({artefacto=>!(artefacto==self) and self.elMasAlto()==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
-	
 	method mejorObjeto(usuario){
 		var equipo= usuario.equipo()
 		equipo.remove(self)
