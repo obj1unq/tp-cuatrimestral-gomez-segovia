@@ -40,59 +40,67 @@ object capoRolando{
 object espadaDelDestino{
 	method valorLuchaDado(usuario)=3
 	method valorHechiceriaDado(usuario)=0
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 
 object libroDeHechizos{
 	method valorLuchaDado(usuario)=0
-	
 	method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 
 object collarDivino{
 	method valorLuchaDado(usuario)=1
 	method valorHechiceriaDado(usuario)=1
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 
 object espejoFantastico{
 	//CORRECCION: La sumatoria es algo que se necesita como valor temporal. Entonces está mal que sea un atributo del objeto.
 	//CORRECCION: Los atributos son cosas que el objeto debe acordarse a lo largo del tiempo.
 	//CORRECCION: Ademas, cuando se actualiza? 
-	var sumatoria=[]
-	//CORRECCION: Esta variable podría no estar mal, pero como ustedes definieron que el capo que usa el artefacto se envía por parámetro cuando quiere obtener
-	//CORRECCION: el valor de lucha dado y el valor de hechicería dado, está mal que se lo acuerde en un atributo. 
-	//CORRECCION:  O los artefactos se acuerdan su dueño o lo reciben por parámetro cuando es usado. Ambas a la vez está mal
-	var property usuario
-	//CORRECCION: Esto es algo que se puede calcular a partir del capo, está mal que se lo acuerde el objeto.
-	var equipamiento
+//var sumatoria=[]
+	
 	
 	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
 	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
 	//CORRECCION: el objeto buscado no depende de cada elemento individualmente, si no de todos los objetos de la coleccion (para saber si un obejto es maximo hay que evaluar todos los elementos, no solo el actual)
 	//CORRECCION: no conviene usar un find. En este caso conviene usar el mensaje max(transformer) o una combinacion de map(transformer) y max().
 	//CORRECCION: Previamente, podrías haber filtrado la coleccion con un filter para remover self 
-	method elMejor()=if(!self.equipamiento().isEmpty()){equipamiento.find({artefacto=>!(artefacto==self) and self.elMasAlto()==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
+//method elMejor(usuario)=if(!self.equipamiento(usuario).isEmpty()){self.equipamiento(usuario).find({artefacto=>!(artefacto==self) and self.elMasAlto()==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
 	
-	method equipamiento(){
-		return equipamiento
+	method mejorObjeto(usuario){
+		return 
 	}
-	method quienLoPosee(capo){
-		usuario=capo
+	method equipamiento(usuario){
+		return usuario.equipamiento()
 	}
-	method equipos(unCapo){
-		equipamiento=unCapo.equipo()
-	}
+
 	
-	method maximoPoder(){
-		self.equipamiento().forEach({obj=>sumatoria.add(obj.valorLuchaDado()+obj.valorHechiceriaDado())})
+	method maximoPoder(usuario){
+		/*var sumatoria=[]
+		if(usuario.equipo().isEmpty()){return sumatoria.add(0)}
+		else{
+		usuario.equipo().forEach({obj=>sumatoria.add(obj.valorLuchaDado()+obj.valorHechiceriaDado())})
+		return sumatoria
+		*/
+		usuario.equipo().max({equip=>equip.totalPoder()})
+		}
 	}
-	method elMasAlto(){
-		return sumatoria.max()
+	/*method elMasAlto(usuario){
+		return self.maximoPoder(usuario).max()
 	}
+	* 
+	*/
 	
 	//CORRECCION: Estos mensajes no son los polimórficos. El capo se manda como parametro. Si lo hubieran testeado se hubieran dado cuenta.
 	//CORRECCION: hay que reescribir estos métodos recibiendo el capo por parámetro. Evitar las variables de instancia que se pueden calcular.
-	method valorLuchaDado()=if(!equipamiento.isEmpty()) self.elMejor().valorLuchaDado() else 0
-	method valorHechiceriaDado()=if(!equipamiento.isEmpty())self.elMejor().valorHechiceriaDado() else 0
+	method valorLuchaDado(usuario){
+		return self.maximoPoder(usuario).valorLuchaDado(usuario)
+	}
+	method valorHechiceriaDado(usuario){
+		return self.maximoPoder(usuario).valorLuchaDado(usuario)
+	}
 	
 	
 }
@@ -138,7 +146,7 @@ object armadura{
 	var property refuerzo = noReforzar
 	
 	method valorLuchaDado(_capo) = 2 + refuerzo.valorLuchaDado(_capo)
-	
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 	method valorHechiceriaDado(_capo) = 0 + refuerzo.valorHechiceriaDado(_capo)
 	
 	method reforzar(_refuerzo){
@@ -149,19 +157,23 @@ object armadura{
 object cotaDeMalla{
 	method valorLuchaDado(_capo) = 1
 	method valorHechiceriaDado(_capo) = 0
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 	
 object bendicion{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 1
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 	
 object hechizo{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = if (_capo.valorHechiceriaBase()>3) 2 else 0
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 	
 object noReforzar{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 0
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
