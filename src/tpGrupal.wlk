@@ -75,6 +75,7 @@ object espejoFantastico{
 	method equipamiento(usuario){
 		return usuario.equipamiento()
 	}
+	
 
 	
 	method maximoPoder(usuario){
