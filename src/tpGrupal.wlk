@@ -70,12 +70,11 @@ object espejoFantastico{
 //method elMejor(usuario)=if(!self.equipamiento(usuario).isEmpty()){self.equipamiento(usuario).find({artefacto=>!(artefacto==self) and self.elMasAlto()==artefacto.valorLuchaDado()+artefacto.valorHechiceriaDado()})}
 	
 	method mejorObjeto(usuario){
-		return return usuario.equipo().max({equip=>equip.totalPoder()})
+		var equipo= usuario.equipo()
+		equipo.remove(self)
+		return equipo.max({equip=>equip.totalPoder()})
+		
 	}
-	method equipamiento(usuario){
-		return usuario.equipamiento()
-	}
-	
 	//CORRECCION: Estos mensajes no son los polimórficos. El capo se manda como parametro. Si lo hubieran testeado se hubieran dado cuenta.
 	//CORRECCION: hay que reescribir estos métodos recibiendo el capo por parámetro. Evitar las variables de instancia que se pueden calcular.
 	method valorLuchaDado(usuario){
