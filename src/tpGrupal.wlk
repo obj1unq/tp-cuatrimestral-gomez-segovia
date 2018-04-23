@@ -84,8 +84,8 @@ object espejoFantastico{
 		usuario.equipo().forEach({obj=>sumatoria.add(obj.valorLuchaDado()+obj.valorHechiceriaDado())})
 		return sumatoria
 		*/
-		usuario.equipo().max({equip=>equip.totalPoder()})
-		}
+		return usuario.equipo().max({equip=>equip.totalPoder()})
+		
 	}
 	/*method elMasAlto(usuario){
 		return self.maximoPoder(usuario).max()
