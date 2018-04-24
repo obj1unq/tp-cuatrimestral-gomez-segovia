@@ -55,9 +55,7 @@ object collarDivino{
 }
 
 object espejoFantastico{
-	//CORRECCION: La sumatoria es algo que se necesita como valor temporal. Entonces está mal que sea un atributo del objeto.
-	//CORRECCION: Los atributos son cosas que el objeto debe acordarse a lo largo del tiempo.
-	//CORRECCION: Ademas, cuando se actualiza? 
+
 	
 	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
 	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
@@ -65,13 +63,12 @@ object espejoFantastico{
 	//CORRECCION: no conviene usar un find. En este caso conviene usar el mensaje max(transformer) o una combinacion de map(transformer) y max().
 	//CORRECCION: Previamente, podrías haber filtrado la coleccion con un filter para remover self 
 	method mejorObjeto(usuario){
-		var equipo= usuario.equipo()
-		equipo.remove(self)
-		return equipo.max({equip=>equip.totalPoder()})
+		var equipo= usuario.equipo().filter({artefacto=>!artefacto==self})
+		
+		return if(!equipo.isEmpty()){return equipo.max({equip=>equip.totalPoder()})} else {return artefactoNulo}
 		
 	}
-	//CORRECCION: Estos mensajes no son los polimórficos. El capo se manda como parametro. Si lo hubieran testeado se hubieran dado cuenta.
-	//CORRECCION: hay que reescribir estos métodos recibiendo el capo por parámetro. Evitar las variables de instancia que se pueden calcular.
+
 	method valorLuchaDado(usuario){
 		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
 	}
@@ -150,6 +147,11 @@ object hechizo{
 }
 	
 object noReforzar{
+	method valorLuchaDado(_capo) = 0
+	method valorHechiceriaDado(_capo) = 0
+	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+}
+object artefactoNulo{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 0
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
