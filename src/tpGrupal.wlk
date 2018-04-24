@@ -4,7 +4,7 @@
 
 object capoRolando{
     //var equipo=[]
-	var property equipo= []
+	var property equipo= #{}
 	var lucha=3
 	var hechiceria=1
 	var bando=bandoDelSur
