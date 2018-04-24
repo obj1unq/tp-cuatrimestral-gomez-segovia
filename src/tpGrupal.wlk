@@ -3,7 +3,6 @@
 //CORRECCION: Hay muchos errores conceptuales en la parte del espejo. El resto está bien
 
 object capoRolando{
-    //var equipo=[]
 	var property equipo= #{}
 	var lucha=3
 	var hechiceria=1
