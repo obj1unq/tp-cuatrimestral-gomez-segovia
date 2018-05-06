@@ -8,6 +8,7 @@ class Capo{
 	var hechiceria=1
 	var bando
 	var property estaVivo= true
+	var property oculto=false
 	//method equipo(){
 	//	return equipo
 	//}
@@ -27,7 +28,7 @@ class Capo{
 		}
 	}
 	
-	method encuentro(capo){
+	method efecto(capo){
 		if(self.bando()==capo.bando()){
 			self.darTodoEquipo(capo)
 		}
@@ -56,31 +57,41 @@ class Capo{
 		objeto.efecto(self)
 	}
 	method bando()= bando
+	method ocultar(){ oculto=true }
 	
 }
 
 //Si es un return, se puede reemplazar por un igual
 object espadaDelDestino{
+	var property oculto=false
+	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(usuario)=3
 	method valorHechiceriaDado(usuario)=0
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	method ocultar(){ oculto=true }
 }
 
 object libroDeHechizos{
+	var property oculto=false
+	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(usuario)=0
 	method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	method ocultar(){ oculto=true }
 }
 
 object collarDivino{
+	var property oculto=false
+	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(usuario)=1
 	method valorHechiceriaDado(usuario)=1
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	method ocultar(){ oculto=true }
 }
 
 object espejoFantastico{
 
-	
+	var property oculto=false
 	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
 	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
 	//CORRECCION: el objeto buscado no depende de cada elemento individualmente, si no de todos los objetos de la coleccion (para saber si un obejto es maximo hay que evaluar todos los elementos, no solo el actual)
@@ -99,38 +110,45 @@ object espejoFantastico{
 	method valorHechiceriaDado(usuario){
 		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
 	}
-	
-	
+	method efecto(_capo){_capo.equipar(self)}
+	method ocultar(){ oculto=true }
 }
 
 class CofrecitoDeOro{
 	var property valor=100
+	var property oculto=false
 	method efecto(capo){
 		//CORRECCION: NO anda, hay que pasar el parametro
 		capo.bando().ganarOro(valor)
 	}
+	method ocultar(){ oculto=true }
 }
 class CumuloDeCarbon{
 	var property valor=50
+	var property oculto=false
 	method efecto(capo){
 		capo.bando().ganarRecursos(valor)
 	}
+	method ocultar(){ oculto=true }
 }
 
 class ViejoSabio{
 	var valorLuchaDado=ayudanteDelSabio.valorDeLucha()
-	
+	var property oculto=false
 	var valorHechiceriaDado=1
 	
 	method efecto(capo){
 		capo.entrenarMente(valorHechiceriaDado)
 		capo.entrenarCuerpo(valorLuchaDado)
 	}
+	method ocultar(){ oculto=true }
 }
 
 object ayudanteDelSabio {
 
  var property valorDeLucha = 1
+ var property oculto=false
+ method ocultar(){ oculto=true }
 
 }
 
@@ -153,10 +171,14 @@ class Bandos{
 }
 
 class Armadura{
-	var property refuerzo = noReforzar
+	var refuerzo = noReforzar
 	var valorLuchaBase=2
 	var valorHechiceriaBase=0
+	var property oculto=false
 	
+	method refuerzo(_refuerzo){refuerzo=_refuerzo}
+	method ocultar(){ oculto=true }
+	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(_capo) = valorLuchaBase + refuerzo.valorLuchaDado(_capo)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 	method valorHechiceriaDado(_capo) = valorHechiceriaBase + refuerzo.valorHechiceriaDado(_capo)
@@ -190,3 +212,18 @@ object artefactoNulo{
 	method valorHechiceriaDado(_capo) = 0
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
+
+class Neblina{
+	var interior=#{}
+	
+	method ocultar(_objeto){
+		interior.add(_objeto)
+		_objeto.ocultar() 
+	}
+	method efecto(_capo){_capo.equipo().addAll(interior)}
+}
+
+
+
+
+

@@ -12,46 +12,48 @@ describe "test de capos y recursos" {
     var neblina = new Neblina()
 
 test "rolando se encuentra a archibaldo" {
-		rolando.encontrarAlgo(archibaldo) 
+		rolando.encontrar(archibaldo) 
 		assert.notThat(rolando.estaVivo())
 	}
 	
 	test "caterina se encuentra con rolando" {
-		caterina.encontrarAlgo(rolando)
-		assert.that(rolando.artefactos().size() == 1)
-		assert.that(rolando.valorHechiceria() == 3)
-		assert.that(rolando.valorLucha() == 4)
-		assert.that(caterina.artefactos().size() == 0)	
+		armadura.refuerzo(bendicion)
+		caterina.encontrar(armadura)
+		caterina.encontrar(rolando)
+		assert.that(rolando.equipo().size() == 1)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 3)
+		assert.that(caterina.equipo().size() == 0)	
 		}
 	
 	test "rolando se encuentra la armadura bendecida" {
-		rolando.encontrarAlgo(armadura)
 		armadura.refuerzo(bendicion)
+		rolando.encontrar(armadura)
 		assert.that(rolando.valorHechiceria() == 4)
 		assert.that(rolando.valorLucha() == 3)	
 	}
 	
 	test "rolando encuentra al viejo sabio" {
-		rolando.encontrarAlgo(viejoSabio)
+		rolando.encontrar(viejoSabio)
 		assert.that(rolando.valorHechiceria() == 4)
 		assert.that(rolando.valorLucha() == 2)
 	}
 	
 	test "rolando se encuentra con el viejo sabio la armadura bendecida, caterina y archibaldo" {
-		viejoSabio.llego(rolando)
-		armadura.llego(rolando)
+		viejoSabio.efecto(rolando)
 		armadura.refuerzo(bendicion)
-		caterina.llego(rolando)
-		archibaldo.llego(rolando) 
+		armadura.efecto(rolando)
+		caterina.efecto(rolando)
+		archibaldo.efecto(rolando) 
 		assert.notThat(archibaldo.estaVivo())		
 	}
 	
 	test "rolando encuentra cosas "{
-		rolando.encontrarAlgo(armadura)
 		armadura.refuerzo(bendicion)
+		rolando.encontrar(armadura)
 		assert.that(rolando.valorHechiceria() == 4)
 		assert.that(rolando.valorLucha() == 3)	
-		rolando.encontrarAlgo(espejoFantastico)
+		rolando.encontrar(espejoFantastico)
 		assert.that(rolando.valorHechiceria() == 5)
 		assert.that(rolando.valorLucha() == 5)	
 				
