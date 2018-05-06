@@ -19,11 +19,11 @@ object capoRolando{
 	
 	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
 	
-	method entrenarMente(){
-		hechiceria+=1
+	method entrenarMente(_numero){
+		hechiceria+=_numero
 	}
-	method entrenarCuerpo(){
-		lucha+=1
+	method entrenarCuerpo(_numero){
+		lucha+=_numero
 	}
 	method equipar(objeto){
 		equipo.add(objeto)
@@ -79,23 +79,35 @@ object espejoFantastico{
 	
 }
 
-object cofrecitoDeOro{
+class CofrecitoDeOro{
+	var property valor=100
 	method efecto(capo){
 		//CORRECCION: NO anda, hay que pasar el parametro
-		capo.bando().ganarOro(100)
+		capo.bando().ganarOro(valor)
 	}
 }
-object cumuloDeCarbon{
+class CumuloDeCarbon{
+	var property valor=50
 	method efecto(capo){
-		capo.bando().ganarRecursos(50)
+		capo.bando().ganarRecursos(valor)
 	}
 }
 
-object viejoSabio{
+class ViejoSabio{
+	var valorLuchaDado=ayudanteDelSabio.valorDeLucha()
+	
+	var valorHechiceriaDado=1
+	
 	method efecto(capo){
-		capo.entrenarMente()
-		capo.entrenarCuerpo()
+		capo.entrenarMente(valorHechiceriaDado)
+		capo.entrenarCuerpo(valorLuchaDado)
 	}
+}
+
+object ayudanteDelSabio {
+
+ var property valorDeLucha = 1
+
 }
 
 object bandoDelSur{
@@ -116,16 +128,14 @@ object bandoDelSur{
 	}
 }
 
-object armadura{
+class Armadura{
 	var property refuerzo = noReforzar
+	var valorLuchaBase=2
+	var valorHechiceriaBase=0
 	
-	method valorLuchaDado(_capo) = 2 + refuerzo.valorLuchaDado(_capo)
+	method valorLuchaDado(_capo) = valorLuchaBase + refuerzo.valorLuchaDado(_capo)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method valorHechiceriaDado(_capo) = 0 + refuerzo.valorHechiceriaDado(_capo)
-	
-	method reforzar(_refuerzo){
-		refuerzo = _refuerzo
-	}
+	method valorHechiceriaDado(_capo) = valorHechiceriaBase + refuerzo.valorHechiceriaDado(_capo)
 }	
 
 object cotaDeMalla{
