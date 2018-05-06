@@ -2,15 +2,39 @@
 //CORRECCION: La entrega está inmadura: test que no anda y muchas cosas sin test. Cosas que si estuvieran testeadas no andarían
 //CORRECCION: Hay muchos errores conceptuales en la parte del espejo. El resto está bien
 
-object capoRolando{
+class Capo{
 	var property equipo= #{}
 	var lucha=3
 	var hechiceria=1
-	var bando=bandoDelSur
+	var bando
+	var property estaVivo= true
 	//method equipo(){
 	//	return equipo
 	//}
+	method darTodoEquipo(capo){
+		capo.equipo().addAll(self.equipo())
+	}
+	method estoyMuerto(){
+		estaVivo=false
+	}
+	method enfrentamiento(capo){
+		if(capo.valorLucha()+capo.valorHechiceria()>self.valorLucha()+self.valorHechiceria()){
+			estaVivo=false 
+		}
+		else{
+			estaVivo=true
+			capo.estoyMuerto()
+		}
+	}
 	
+	method encuentro(capo){
+		if(self.bando()==capo.bando()){
+			self.darTodoEquipo(capo)
+		}
+		else{
+			self.enfrentamiento(capo)
+		}
+	}
 	method valorLuchaBase()= lucha
 	
 	method valorHechiceriaBase()= hechiceria
@@ -110,7 +134,7 @@ object ayudanteDelSabio {
 
 }
 
-object bandoDelSur{
+class Bandos{
 	var tesoro=0
 	var reservaDeMateriales=0
 	method tesoro(){

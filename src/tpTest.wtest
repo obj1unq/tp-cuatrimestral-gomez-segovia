@@ -1,37 +1,61 @@
 import tpGrupal.*
+describe "test de capos y recursos" {
+	
+	
+	var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
+    var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
+	var  rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
+	var  caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
+	var  archibaldo = new Capo(bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino, espejoFantastico })
+    var armadura = new Armadura()
+    var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
+    var neblina = new Neblina()
 
-test "Rolando comienza con 3 puntos básicos de lucha y 1 de hechicería" {
-	assert.equals(3,capoRolando.valorLucha())
-	assert.equals(1,capoRolando.valorHechiceria())
+test "rolando se encuentra a archibaldo" {
+		rolando.encontrarAlgo(archibaldo) 
+		assert.notThat(rolando.estaVivo())
+	}
+	
+	test "caterina se encuentra con rolando" {
+		caterina.encontrarAlgo(rolando)
+		assert.that(rolando.artefactos().size() == 1)
+		assert.that(rolando.valorHechiceria() == 3)
+		assert.that(rolando.valorLucha() == 4)
+		assert.that(caterina.artefactos().size() == 0)	
+		}
+	
+	test "rolando se encuentra la armadura bendecida" {
+		rolando.encontrarAlgo(armadura)
+		armadura.refuerzo(bendicion)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 3)	
+	}
+	
+	test "rolando encuentra al viejo sabio" {
+		rolando.encontrarAlgo(viejoSabio)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 2)
+	}
+	
+	test "rolando se encuentra con el viejo sabio la armadura bendecida, caterina y archibaldo" {
+		viejoSabio.llego(rolando)
+		armadura.llego(rolando)
+		armadura.refuerzo(bendicion)
+		caterina.llego(rolando)
+		archibaldo.llego(rolando) 
+		assert.notThat(archibaldo.estaVivo())		
+	}
+	
+	test "rolando encuentra cosas "{
+		rolando.encontrarAlgo(armadura)
+		armadura.refuerzo(bendicion)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 3)	
+		rolando.encontrarAlgo(espejoFantastico)
+		assert.that(rolando.valorHechiceria() == 5)
+		assert.that(rolando.valorLucha() == 5)	
+				
+	}
 }
 
-test "Rolando incrementa 1 punto básico de hechicería"{
-	capoRolando.entrenarMente()
-	assert.equals(3,capoRolando.valorLucha())
-	assert.equals(2,capoRolando.valorHechiceria())
-}
-
-test "Rolando obtiene el Collar Divino"{
-	capoRolando.equipar(collarDivino)
-	assert.equals(4,capoRolando.valorLucha())
-	assert.equals(2,capoRolando.valorHechiceria())
-}
-
-//CORRECCION: Este test no andaba! 
-//
-test "Rolando obtiene el Libro de Hechizos"{
-	capoRolando.equipar(libroDeHechizos)
-	assert.equals(3,capoRolando.valorLucha())
-	assert.equals(2,capoRolando.valorHechiceria())
-}
-
-test "Rolando obtiene la Espada del Destino"{
-	capoRolando.equipar(espadaDelDestino)
-	assert.equals(6,capoRolando.valorLucha())
-	assert.equals(1,capoRolando.valorHechiceria())
-}
-
-//CORRECCION: Falta testear la armadura y el espejo
-
-
-
+	
