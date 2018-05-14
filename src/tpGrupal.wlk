@@ -7,11 +7,14 @@ class Capo{
 	var lucha=3
 	var hechiceria=1
 	var bando
+	var property posicion = game.at(1, 1)
 	var property estaVivo= true
 	var property oculto=false
 	//method equipo(){
 	//	return equipo
 	//}
+	//method posicion() = game.at(1, 1)
+	
 	method darTodoEquipo(capo){
 		capo.equipo().addAll(self.equipo())
 	}
@@ -59,9 +62,13 @@ class Capo{
 	method bando()= bando
 	method ocultar(){ oculto=true }
 	
+	method imagen() = "jugador.png"
+	
 }
 
-//Si es un return, se puede reemplazar por un igual
+
+
+
 object espadaDelDestino{
 	var property oculto=false
 	method efecto(_capo){_capo.equipar(self)}
@@ -142,6 +149,7 @@ class ViejoSabio{
 		capo.entrenarCuerpo(valorLuchaDado)
 	}
 	method ocultar(){ oculto=true }
+	method imagen() = "pepona.png"
 }
 
 object ayudanteDelSabio {
@@ -182,6 +190,7 @@ class Armadura{
 	method valorLuchaDado(_capo) = valorLuchaBase + refuerzo.valorLuchaDado(_capo)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 	method valorHechiceriaDado(_capo) = valorHechiceriaBase + refuerzo.valorHechiceriaDado(_capo)
+	method imagen() = "pepitaCanchera.png"
 }	
 
 object cotaDeMalla{
