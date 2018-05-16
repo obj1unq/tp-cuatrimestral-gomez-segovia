@@ -2,13 +2,16 @@ import tpGrupal.*
 import wollok.game.*
 
 program CapoTheGame {
-	
-var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
-var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
-var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
-var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
-var archibaldo = new Capo( bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino, espejoFantastico })
+
+var espadaDelDestino = new EspadaDelDestino()
+var collarDivino = new CollarDivino()
+var espejoFantastico = 	new EspejoFantastico()
 var armadura = new Armadura()
+var bandoDelSur = new Bandos(tesoro = 100, reservaDeMateriales = 50)
+var bandoDelNorte = new Bandos(tesoro = 200, reservaDeMateriales = 200)
+var rolando = new Capo(nombreCapo='Rolando', bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
+var caterina = new Capo(nombreCapo='Caterina', bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{espadaDelDestino}, estaVivo=true)
+var archibaldo = new Capo(nombreCapo='Archibaldo', bando = bandoDelNorte, lucha = 1, hechiceria = 3, equipo = #{collarDivino,espejoFantastico}, estaVivo=true)
 var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
 //var neblina = new Neblina()
 
@@ -26,17 +29,13 @@ var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
 	game.addVisualCharacter(rolando)
 	
 //	TECLADO
-//	A.onPressDo{ pepita.come(alpiste) }
-//	M.onPressDo{ pepita.come(manzana) }
 	H.onPressDo { game.say(rolando, "Hola") }
-//	V.onPressDo { pepita.volaHacia(villaGesell) }
-//	B.onPressDo { pepita.volaHacia(buenosAires) }
 	
 	game.whenCollideDo(rolando, {
 		algo => algo.efecto(rolando)
 	})
 	
-//	UP.onPressDo{ rolando.move(game.at(pepita.posicion().x(), pepita.posicion().y()+1))}
+//	UP.onPressDo{ rolando.move(game.at(rolando.posicion().x(), rolando.posicion().y()+1))}
 	
 //	START
 	game.start()

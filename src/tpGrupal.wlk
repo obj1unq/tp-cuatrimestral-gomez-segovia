@@ -1,32 +1,33 @@
-//CORRECCION: Nota Entrega 1: Regular.
-//CORRECCION: La entrega está inmadura: test que no anda y muchas cosas sin test. Cosas que si estuvieran testeadas no andarían
-//CORRECCION: Hay muchos errores conceptuales en la parte del espejo. El resto está bien
+class Ocultable{
+	var property oculto=false
+	method ocultar(){ oculto=true }
+}
 
-class Capo{
+class Capo inherits Ocultable{
+	var property nombreCapo
+	var property imagen = "jugador.png"
 	var property equipo= #{}
 	var lucha=3
 	var hechiceria=1
-	var bando
+	var property bando
 	var property posicion = game.at(1, 1)
 	var property estaVivo= true
-	var property oculto=false
-	//method equipo(){
-	//	return equipo
-	//}
-	//method posicion() = game.at(1, 1)
 	
 	method darTodoEquipo(capo){
 		capo.equipo().addAll(self.equipo())
+		self.equipo().removeAll(self.equipo())
 	}
+	
 	method estoyMuerto(){
 		estaVivo=false
+		game.removeVisual(self)
 	}
+	
 	method enfrentamiento(capo){
-		if(capo.valorLucha()+capo.valorHechiceria()>self.valorLucha()+self.valorHechiceria()){
-			estaVivo=false 
+		if((capo.valorLucha()+capo.valorHechiceria())>(self.valorLucha()+self.valorHechiceria())){
+			self.estoyMuerto() 
 		}
 		else{
-			estaVivo=true
 			capo.estoyMuerto()
 		}
 	}
@@ -39,13 +40,14 @@ class Capo{
 			self.enfrentamiento(capo)
 		}
 	}
+	
 	method valorLuchaBase()= lucha
 	
 	method valorHechiceriaBase()= hechiceria
 	
 	method valorLucha()= equipo.sum({objeto=>objeto.valorLuchaDado(self)})+lucha
 	
-	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
+	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+hechiceria
 	
 	method entrenarMente(_numero){
 		hechiceria+=_numero
@@ -59,172 +61,115 @@ class Capo{
 	method encontrar(objeto){
 		objeto.efecto(self)
 	}
-	method bando()= bando
-	method ocultar(){ oculto=true }
-	
-	method imagen() = "jugador.png"
 	
 }
 
-
-
-
-object espadaDelDestino{
-	var property oculto=false
+class Artefacto inherits Ocultable{
+	var property nombreArtefacto
+	var property imagen = "pepitaCanchera.png" //"item.png"
 	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(usuario)=3
-	method valorHechiceriaDado(usuario)=0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+	method valorLuchaDado(usuario) = 0
+	method valorHechiceriaDado(usuario) = 0
+	method totalPoder(usuario) = self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 }
 
-object libroDeHechizos{
-	var property oculto=false
-	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(usuario)=0
-	method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+class EspadaDelDestino inherits Artefacto{
+	override method valorLuchaDado(usuario)=3
 }
 
-object collarDivino{
-	var property oculto=false
-	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(usuario)=1
-	method valorHechiceriaDado(usuario)=1
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+class LibroDeHechizos inherits Artefacto{
+	override method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
 }
 
-object espejoFantastico{
+class CollarDivino inherits Artefacto{
+	override method valorLuchaDado(usuario)=1
+	override method valorHechiceriaDado(usuario)=1
+}
 
-	var property oculto=false
-	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
-	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
-	//CORRECCION: el objeto buscado no depende de cada elemento individualmente, si no de todos los objetos de la coleccion (para saber si un obejto es maximo hay que evaluar todos los elementos, no solo el actual)
-	//CORRECCION: no conviene usar un find. En este caso conviene usar el mensaje max(transformer) o una combinacion de map(transformer) y max().
-	//CORRECCION: Previamente, podrías haber filtrado la coleccion con un filter para remover self 
+class Armadura inherits Artefacto{
+	var property sinRefuerzo = new Artefacto()
+	var property cotaDeMalla = new CotaDeMalla()
+	var property bendicion = new Bendicion()
+	var property hechizo = new Hechizo()
+	var property refuerzo = sinRefuerzo
+	method reforzar(_refuerzo){ refuerzo=_refuerzo }
+	override method valorLuchaDado(_capo) = 2 + refuerzo.valorLuchaDado(_capo)
+	override method valorHechiceriaDado(_capo) = 0 + refuerzo.valorHechiceriaDado(_capo)
+}	
+
+class CotaDeMalla inherits Artefacto{
+	override method valorLuchaDado(_capo) = 1
+}
+
+class Bendicion inherits Artefacto{
+	override method valorHechiceriaDado(_capo) = 1
+}
+
+class Hechizo inherits Artefacto{
+	override method valorHechiceriaDado(_capo) = if (_capo.valorHechiceriaBase()>3) 2 else 0
+}
+
+class EspejoFantastico inherits Artefacto{
+
 	method mejorObjeto(usuario){
-		var equipo= usuario.equipo().filter({artefacto=>!artefacto==self})
-		
-		return if(!equipo.isEmpty()){return equipo.max({equip=>equip.totalPoder()})} else {return artefactoNulo}
-		
+		var artefactoNulo = new Artefacto()
+		var equipo = usuario.equipo().add(artefactoNulo) //filter({ _artefacto => _artefacto == self})
+		return if (equipo.remove(self).isEmpty()) artefactoNulo else equipo.max({equip=>equip.totalPoder()})	
 	}
-
-	method valorLuchaDado(usuario){
+	
+	override method valorLuchaDado(usuario){
 		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
 	}
-	method valorHechiceriaDado(usuario){
-		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
+	
+	override  method valorHechiceriaDado(usuario){
+		return self.mejorObjeto(usuario).valorHechiceriaDado(usuario)
 	}
-	method efecto(_capo){_capo.equipar(self)}
-	method ocultar(){ oculto=true }
+
 }
 
-class CofrecitoDeOro{
-	var property valor=100
-	var property oculto=false
-	method efecto(capo){
-		//CORRECCION: NO anda, hay que pasar el parametro
-		capo.bando().ganarOro(valor)
-	}
-	method ocultar(){ oculto=true }
-}
-class CumuloDeCarbon{
-	var property valor=50
-	var property oculto=false
-	method efecto(capo){
-		capo.bando().ganarRecursos(valor)
-	}
-	method ocultar(){ oculto=true }
-}
-
-class ViejoSabio{
+class ViejoSabio inherits Ocultable{
+	var property imagen = "pepona.png"
 	var valorLuchaDado=ayudanteDelSabio.valorDeLucha()
-	var property oculto=false
 	var valorHechiceriaDado=1
 	
 	method efecto(capo){
 		capo.entrenarMente(valorHechiceriaDado)
 		capo.entrenarCuerpo(valorLuchaDado)
 	}
-	method ocultar(){ oculto=true }
-	method imagen() = "pepona.png"
 }
 
-object ayudanteDelSabio {
-
- var property valorDeLucha = 1
- var property oculto=false
- method ocultar(){ oculto=true }
-
+object ayudanteDelSabio inherits Ocultable{
+	var property valorDeLucha = 1
 }
 
 class Bandos{
-	var tesoro=0
-	var reservaDeMateriales=0
-	method tesoro(){
-		return tesoro
-	}
-	method reservadeMateriales(){
-		return reservaDeMateriales
-	}
+	var property tesoro=0
+	var property reservaDeMateriales=0
+	
 	method ganarOro(_numero){
-		tesoro= tesoro+_numero
+		tesoro+=_numero
 	}
-	//CORRECCION: si le paso un parametro, supongo que quiero sumar ese parámetro y no hardcodear el 50.
 	method ganarRecursos(_numero){
-		reservaDeMateriales= reservaDeMateriales+_numero
+		reservaDeMateriales+=_numero
 	}
 }
 
-class Armadura{
-	var refuerzo = noReforzar
-	var valorLuchaBase=2
-	var valorHechiceriaBase=0
-	var property oculto=false
-	
-	method refuerzo(_refuerzo){refuerzo=_refuerzo}
-	method ocultar(){ oculto=true }
-	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(_capo) = valorLuchaBase + refuerzo.valorLuchaDado(_capo)
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method valorHechiceriaDado(_capo) = valorHechiceriaBase + refuerzo.valorHechiceriaDado(_capo)
-	method imagen() = "pepitaCanchera.png"
-}	
 
-object cotaDeMalla{
-	method valorLuchaDado(_capo) = 1
-	method valorHechiceriaDado(_capo) = 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+class CofrecitoDeOro inherits Ocultable{
+	method efecto(capo){
+		capo.bando().ganarOro(100)
+	}
 }
-	
-object bendicion{
-	method valorLuchaDado(_capo) = 0
-	method valorHechiceriaDado(_capo) = 1
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-}
-	
-object hechizo{
-	method valorLuchaDado(_capo) = 0
-	method valorHechiceriaDado(_capo) = if (_capo.valorHechiceriaBase()>3) 2 else 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-}
-	
-object noReforzar{
-	method valorLuchaDado(_capo) = 0
-	method valorHechiceriaDado(_capo) = 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-}
-object artefactoNulo{
-	method valorLuchaDado(_capo) = 0
-	method valorHechiceriaDado(_capo) = 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+
+class CumuloDeCarbon inherits Ocultable{
+	method efecto(capo){
+		capo.bando().ganarRecursos(50)
+	}
 }
 
 class Neblina{
+	var property posicion
 	var interior=#{}
-	
 	method ocultar(_objeto){
 		interior.add(_objeto)
 		_objeto.ocultar() 

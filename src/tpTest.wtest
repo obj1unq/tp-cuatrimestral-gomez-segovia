@@ -1,23 +1,24 @@
 import tpGrupal.*
 describe "test de capos y recursos" {
 	
-	
-	var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
-    var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
-	var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
-	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
-	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino, espejoFantastico })
-    var armadura = new Armadura()
-    var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
-    var neblina = new Neblina()
+	var espadaDelDestino = new EspadaDelDestino()
+	var collarDivino = new CollarDivino()
+	var espejoFantastico = 	new EspejoFantastico()
+	var armadura = new Armadura()
+	var bandoDelSur = new Bandos(tesoro = 100, reservaDeMateriales = 50)
+	var bandoDelNorte = new Bandos(tesoro = 200, reservaDeMateriales = 200)
+	var rolando = new Capo(nombreCapo='Rolando', bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
+	var caterina = new Capo(nombreCapo='Caterina', bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{espadaDelDestino}, estaVivo=true)
+	var archibaldo = new Capo(nombreCapo='Archibaldo', bando = bandoDelNorte, lucha = 1, hechiceria = 3, equipo = #{collarDivino,espejoFantastico}, estaVivo=true)
+	var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
 
-test "rolando se encuentra a archibaldo" {
+	test "rolando se encuentra a archibaldo" {
 		rolando.encontrar(archibaldo) 
 		assert.notThat(rolando.estaVivo())
 	}
 	
 	test "caterina se encuentra con rolando" {
-		armadura.refuerzo(bendicion)
+		armadura.reforzar(armadura.bendicion())
 		caterina.encontrar(armadura)
 		caterina.encontrar(rolando)
 		assert.that(rolando.equipo().size() == 1)
@@ -27,7 +28,7 @@ test "rolando se encuentra a archibaldo" {
 		}
 	
 	test "rolando se encuentra la armadura bendecida" {
-		armadura.refuerzo(bendicion)
+		armadura.reforzar(armadura.bendicion())
 		rolando.encontrar(armadura)
 		assert.that(rolando.valorHechiceria() == 4)
 		assert.that(rolando.valorLucha() == 3)	
@@ -41,7 +42,7 @@ test "rolando se encuentra a archibaldo" {
 	
 	test "rolando se encuentra con el viejo sabio la armadura bendecida, caterina y archibaldo" {
 		viejoSabio.efecto(rolando)
-		armadura.refuerzo(bendicion)
+		armadura.reforzar(armadura.bendicion())
 		armadura.efecto(rolando)
 		caterina.efecto(rolando)
 		archibaldo.efecto(rolando) 
@@ -49,7 +50,7 @@ test "rolando se encuentra a archibaldo" {
 	}
 	
 	test "rolando encuentra cosas "{
-		armadura.refuerzo(bendicion)
+		armadura.reforzar(armadura.bendicion())
 		rolando.encontrar(armadura)
 		assert.that(rolando.valorHechiceria() == 4)
 		assert.that(rolando.valorLucha() == 3)	
