@@ -1,6 +1,7 @@
 import tpGrupal.*
 import wollok.game.*
 
+// TODO ¿Notaron que su juego no anda?
 program CapoTheGame {
 	
 var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
