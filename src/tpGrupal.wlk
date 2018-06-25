@@ -122,7 +122,7 @@ object espejoFantastico{
 	method capoSinArtefactos(){
 		return self.artefactosPosibles().isEmpty()
 	}
-	method efecto(){
+	method efectoEspejo(){
 		if(self.capoSinArtefactos()){
 			lucha=0
 			hechiceria=0
@@ -138,7 +138,7 @@ object espejoFantastico{
 		}
 		method valorLuchaDado(_capo) = lucha
 		method valorHechiceriaDado(_capo) = hechiceria
-	method efecto(_capo){_capo.equipar(self)}
+	method efecto(_capo){_capo.equipar(self) self.efectoEspejo()}
 	method ocultar(){ oculto=true }
 }
 
