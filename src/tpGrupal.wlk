@@ -112,26 +112,35 @@ object collarDivino{
 object espejoFantastico{
 
 	var property oculto=false
-	//CORRECCION: Hay un doble checkeo de lo mismo. El equipamiento vacio se checkea ademas de aca en los metodos valorLuchaDado y valorHechiceriaDado
-	//CORRECCION: Correccion: Además la estrategia es rebuscada y no anda. El find es útil cuando la condicion solo depende del elemento que se está evaluando. Cuando tenes problemas como max y min que
-	//CORRECCION: el objeto buscado no depende de cada elemento individualmente, si no de todos los objetos de la coleccion (para saber si un obejto es maximo hay que evaluar todos los elementos, no solo el actual)
-	//CORRECCION: no conviene usar un find. En este caso conviene usar el mensaje max(transformer) o una combinacion de map(transformer) y max().
-	//CORRECCION: Previamente, podrías haber filtrado la coleccion con un filter para remover self 
-	method mejorObjeto(usuario){
-		var equipo= usuario.equipo().filter({artefacto=>!artefacto==self})
-
-		// TODO GRAVE, este código no funciona porque no le pasa los argumentos esperados al mandar el mensaje #totalPoder. 		
-		return if(!equipo.isEmpty()){return equipo.max({equip=>equip.totalPoder()})} else {return artefactoNulo}
+	var capoQueLaPosee
+	var lucha
+	var hechiceria
+	
+	method artefactosPosibles(){
+		return capoQueLaPosee.artefactos().filter({artefacto=>!artefacto==self})
+	}
+	method mejorObjeto(){
+		return(self.artefactosPosibles().max({artefacto=>artefacto.totalPoder(capoQueLaPosee)}))
+	}
+	method capoSinArtefactos(){
+		return self.artefactosPosibles().isEmpty()
+	}
+	method efectoEspejo(){
+		if(self.capoSinArtefactos()){
+			lucha=0
+			hechiceria=0
+		}
+		else{
+			lucha=self.mejorObjeto().valorLuchaDado(capoQueLaPosee)
+			hechiceria=self.mejorObjeto().valorHechiceriaDado(capoQueLaPosee)
+		}
+	}
 		
-	}
-
-	method valorLuchaDado(usuario){
-		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
-	}
-	method valorHechiceriaDado(usuario){
-		// TODO Debería decir hechicería en lugar de lucha.
-		return self.mejorObjeto(usuario).valorLuchaDado(usuario)
-	}
+		method duenho(capo){
+			capoQueLaPosee=capo
+		}
+		method valorLuchaDado(_capo) = lucha
+		method valorHechiceriaDado(_capo) = hechiceria
 	method efecto(_capo){_capo.equipar(self)}
 	method ocultar(){ oculto=true }
 }
