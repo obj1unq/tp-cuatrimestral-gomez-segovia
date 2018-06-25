@@ -58,8 +58,8 @@ test "rolando encuentra algo"{
 test " Archibaldo"{
 	
 	assert.equals(bandoDelNorte,archibaldo.bando())
-	assert.equals(5,archibaldo.valorLucha())
-	assert.equals(5,archibaldo.valorHechiceria())
+	assert.equals(5,archibaldo.valorLuchaBase())
+	assert.equals(5,archibaldo.valorHechiceriaBase())
 	assert.equals(2,archibaldo.equipo().size())
 }
 
