@@ -1,16 +1,18 @@
 import tpGrupal.*
+
 describe "test de capos y recursos" {
 	
-	
+  
 	var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 	var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
 	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{espadaDelDestino}, estaVivo=true)
-	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{ collarDivino, espejoFantastico }, estaVivo=true)
+	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{ collarDivino }, estaVivo=true)
+	var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0)
     var armadura = new Armadura()
     var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
     var neblina = new Neblina()
-    
+   
 
 test "Rolando"{
 	
@@ -56,7 +58,7 @@ test "rolando encuentra algo"{
 }
 
 test " Archibaldo"{
-	
+	archibaldo.equipar(espejoFantastico)
 	assert.equals(bandoDelNorte,archibaldo.bando())
 	assert.equals(3,archibaldo.valorLuchaBase())
 	assert.equals(3,archibaldo.valorHechiceriaBase())

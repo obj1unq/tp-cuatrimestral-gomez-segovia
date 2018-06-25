@@ -3,14 +3,15 @@ import wollok.game.*
 
 // TODO ¿Notaron que su juego no anda?
 program CapoTheGame {
-	
+var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0)
 var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
 var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
 var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
-var archibaldo = new Capo( bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino, espejoFantastico })
+var archibaldo = new Capo( bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino})
 var armadura = new Armadura()
 var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
+archibaldo.equipar(espejoFantastico)
 //var neblina = new Neblina()
 
 //	CONFIG	

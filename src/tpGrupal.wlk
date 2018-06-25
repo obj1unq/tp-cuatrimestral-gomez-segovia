@@ -1,13 +1,6 @@
-//CORRECCION: Nota Entrega 1: Regular.
-//CORRECCION: La entrega está inmadura: test que no anda y muchas cosas sin test. Cosas que si estuvieran testeadas no andarían
-//CORRECCION: Hay muchos errores conceptuales en la parte del espejo. El resto está bien
 
-// TODO GRAVE: Sigue habiendo tests rojos!
-// TODO No puede estar todo el TP en un archivo.
+
 class Capo{
-	// TODO Hay que tener cuidado con la nomenclatura, la palabra equipo no aparece 
-	// en la descripción del dominio, la inventaron ustedes. Salvo que haya una muy
-	// buena justificación, debemos evitar esto. 
 	var property equipo= #{}
 	var lucha=3
 	var hechiceria=1
@@ -16,8 +9,7 @@ class Capo{
 	var property estaVivo= true
 	var property oculto=false
 	
-	// TODO No dejar código comentado!
-	//method posicion() = game.at(1, 1)
+
 	
 	method darTodoEquipo(capo){
 		capo.equipo().addAll(self.equipo())
@@ -51,15 +43,15 @@ class Capo{
 	
 	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
 	
-	// TODO Nombres inventados
+
 	method entrenarMente(_numero){
 		hechiceria+=_numero
 	}
-	// TODO Nombres inventados
+	
 	method entrenarCuerpo(_numero){
 		lucha+=_numero
 	}
-	// TODO Nombres inventados
+
 	method equipar(objeto){
 		equipo.add(objeto)
 	}
@@ -68,8 +60,7 @@ class Capo{
 	}
 	method bando()= bando
 	
-	// TODO Imagino que esto se relaciona con la neblina, sin embargo la implementación es incorrecta
-	// porque no permite relacionar una neblina con los elementos que oculta.
+
 	method ocultar(){ oculto=true }
 	
 	method imagen() = "jugador.png"
@@ -81,7 +72,7 @@ class Capo{
 object espadaDelDestino{
 	var property oculto=false
 	method efecto(_capo){_capo.equipar(self)}
-	// TODO ¿Por qué "dado"?
+
 	method valorLuchaDado(usuario)=3
 	method valorHechiceriaDado(usuario)=0
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
@@ -106,7 +97,7 @@ object collarDivino{
 	method ocultar(){ oculto=true }
 }
 
-object espejoFantastico{
+class EspejoFantastico{
 
 	var property oculto=false
 	var capoQueLaPosee
@@ -216,31 +207,31 @@ class Armadura{
 object cotaDeMalla{
 	method valorLuchaDado(_capo) = 1
 	method valorHechiceriaDado(_capo) = 0
-	// TODO ¿Cuándo se usa este método?
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	
+	
 }
 	
 object bendicion{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 1
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	
 }
 	
 object hechizo{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = if (_capo.valorHechiceriaBase()>3) 2 else 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+
 }
 	
 object noReforzar{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	
 }
 object artefactoNulo{
 	method valorLuchaDado(_capo) = 0
 	method valorHechiceriaDado(_capo) = 0
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
+	
 }
 
 class Neblina{
@@ -249,7 +240,7 @@ class Neblina{
 	method ocultar(_objeto){
 		interior.add(_objeto)
 		
-		// TODO ¿Para qué sirve esto?
+	
 		_objeto.ocultar() 
 	}
 	method efecto(_capo){_capo.equipo().addAll(interior)}
