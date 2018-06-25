@@ -46,7 +46,7 @@ class Capo{
 	method valorLuchaBase()= lucha
 	
 	method valorHechiceriaBase()= hechiceria
-	
+	 
 	method valorLucha()= equipo.sum({objeto=>objeto.valorLuchaDado(self)})+lucha
 	
 	method valorHechiceria()= equipo.sum({objeto=>objeto.valorHechiceriaDado(self)})+ hechiceria
