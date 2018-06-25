@@ -5,11 +5,79 @@ describe "test de capos y recursos" {
 	var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 	var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
-	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
-	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino, espejoFantastico })
+	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{espadaDelDestino}, estaVivo=true)
+	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{ collarDivino, espejoFantastico }, estaVivo=true)
     var armadura = new Armadura()
     var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
     var neblina = new Neblina()
+    
+
+test "Rolando"{
+	
+	assert.equals(bandoDelSur,rolando.bando())
+	assert.equals(1,rolando.valorLucha())
+	assert.equals(3,rolando.valorHechiceria())
+	assert.equals(0,rolando.equipo().size())
+}
+
+test "el Sur"{
+	
+	assert.equals(100,bandoDelSur.tesoro())
+	assert.equals(50,bandoDelSur.reservaDeMateriales())
+}
+
+test "el Norte"{
+	assert.equals(100,bandoDelSur.tesoro())
+	assert.equals(50,bandoDelSur.reservaDeMateriales())
+}
+
+test "aumentando poder Rolando"{
+	
+	rolando.entrenarCuerpo(1)
+	rolando.entrenarMente(1)
+	assert.equals(2,rolando.valorLucha())
+	assert.equals(4,rolando.valorHechiceria())
+}
+
+test "Caterina"{
+	
+	assert.equals(bandoDelSur,rolando.bando())
+	assert.equals(4,caterina.valorLucha())
+	assert.equals(3,caterina.valorHechiceria())
+	assert.equals(1,caterina.equipo().size())
+}
+
+test "rolando encuentra algo"{
+	
+	rolando.encontrar(espadaDelDestino)
+	rolando.encontrar(collarDivino)
+	assert.equals(5,rolando.valorLucha())
+	assert.equals(4,rolando.valorHechiceria())	
+}
+
+test " Archibaldo"{
+	
+	assert.equals(bandoDelNorte,archibaldo.bando())
+	assert.equals(5,archibaldo.valorLucha())
+	assert.equals(5,archibaldo.valorHechiceria())
+	assert.equals(2,archibaldo.equipo().size())
+}
+
+test "estado de Rolando"{
+	
+	assert.equals(true,rolando.estaVivo())
+}
+
+test "no estan muertos"{
+	
+	assert.notThat(not archibaldo.estaVivo())
+	assert.notThat(not rolando.estaVivo())
+}
+
+test "estado de Archibaldo"{
+	
+	assert.equals(true,rolando.estaVivo())
+}
 
 test "rolando se encuentra a archibaldo" {
 		rolando.encontrar(archibaldo) 

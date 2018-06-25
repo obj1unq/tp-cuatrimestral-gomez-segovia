@@ -17,9 +17,6 @@ class Capo{
 	var property oculto=false
 	
 	// TODO No dejar código comentado!
-	//method equipo(){
-	//	return equipo
-	//}
 	//method posicion() = game.at(1, 1)
 	
 	method darTodoEquipo(capo){
@@ -30,7 +27,7 @@ class Capo{
 	}
 	method enfrentamiento(capo){
 		if(capo.valorLucha()+capo.valorHechiceria()>self.valorLucha()+self.valorHechiceria()){
-			estaVivo=false 
+			self.estoyMuerto()
 		}
 		else{
 			estaVivo=true
@@ -117,7 +114,7 @@ object espejoFantastico{
 	var hechiceria
 	
 	method artefactosPosibles(){
-		return capoQueLaPosee.artefactos().filter({artefacto=>!artefacto==self})
+		return capoQueLaPosee.equipo().filter({artefacto=>!artefacto==self})
 	}
 	method mejorObjeto(){
 		return(self.artefactosPosibles().max({artefacto=>artefacto.totalPoder(capoQueLaPosee)}))
@@ -125,7 +122,7 @@ object espejoFantastico{
 	method capoSinArtefactos(){
 		return self.artefactosPosibles().isEmpty()
 	}
-	method efectoEspejo(){
+	method efecto(){
 		if(self.capoSinArtefactos()){
 			lucha=0
 			hechiceria=0
@@ -189,7 +186,7 @@ class Bandos{
 	method tesoro(){
 		return tesoro
 	}
-	method reservadeMateriales(){
+	method reservaDeMateriales(){
 		return reservaDeMateriales
 	}
 	method ganarOro(_numero){
