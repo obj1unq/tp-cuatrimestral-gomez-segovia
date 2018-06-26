@@ -13,7 +13,7 @@ var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo =
 var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
 var archibaldo = new Capo( bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ })
 var armadura = new Armadura()
-var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
+var viejoSabio = new ViejoSabio(valorHechiceria = 1)
 archibaldo.equipar(espadaDelDestino)
 caterina.equipar(libroDeHechizos)
 archibaldo.equipar(collarDivino)

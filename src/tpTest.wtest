@@ -12,7 +12,7 @@ describe "test de capos y recursos" {
 	var espadaDelDestino=new EspadaDelDestino()
 	var collarDivino=new CollarDivino()
     var armadura = new Armadura()
-    var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
+    var viejoSabio = new ViejoSabio(valorHechiceria = 1)
     
    
 
@@ -38,8 +38,8 @@ test "el Norte"{
 
 test "aumentando poder Rolando"{
 	
-	rolando.entrenarCuerpo(1)
-	rolando.entrenarMente(1)
+	rolando.aumentarPuntosLucha(1)
+	rolando.aumentarPuntosHechiceria(1)
 	assert.equals(2,rolando.valorLucha())
 	assert.equals(4,rolando.valorHechiceria())
 }
