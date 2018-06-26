@@ -134,7 +134,3 @@ test "caterina se encuentra con rolando" {
 				
 	}
 }
-/*Sabemos que el test rompe en cada parte donde se agrega a archibaldo y sabemos que es por el espejo. 
- * Lo que aun no entendemos es por que el espejo rompe.
- */
-	

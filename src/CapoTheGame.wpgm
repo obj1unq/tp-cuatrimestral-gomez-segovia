@@ -1,5 +1,6 @@
 import tpGrupal.*
 import wollok.game.*
+//Se hicieron correcciones esteticas y estructurales el funcionamiento sigue siendo el mismo
 
 program CapoTheGame {
 var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0,oculto=false)

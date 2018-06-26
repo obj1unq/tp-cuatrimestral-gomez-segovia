@@ -1,3 +1,5 @@
+//Se hicieron correcciones esteticas y estructurales el funcionamiento sigue siendo el mismo
+
 class Capo{
 	var property equipo= #{}
 	var lucha=3
