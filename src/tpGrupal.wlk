@@ -67,40 +67,44 @@ class Capo{
 	method imagen() = "jugador.png"
 	
 }
-
-
-
-object espadaDelDestino{
-	var property oculto=false
+class Artefacto{
+	var property oculto
 	method efecto(_capo){_capo.equipar(self)}
-
-	method valorLuchaDado(usuario)=3
-	method valorHechiceriaDado(usuario)=0
+	method valorLuchaDado(usuario)
+	method valorHechiceriaDado(usuario)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
 	method ocultar(){ oculto=true }
 }
 
-object libroDeHechizos{
-	var property oculto=false
-	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(usuario)=0
-	method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+
+
+class EspadaDelDestino inherits Artefacto{
+	
+
+	override method valorLuchaDado(usuario)=3
+	override method valorHechiceriaDado(usuario)=0
+	
 }
 
-object collarDivino{
-	var property oculto=false
-	method efecto(_capo){_capo.equipar(self)}
-	method valorLuchaDado(usuario)=1
-	method valorHechiceriaDado(usuario)=1
-	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+class LibroDeHechizos inherits Artefacto {
+	
+	
+	override method valorLuchaDado(usuario)=0
+	override method valorHechiceriaDado(usuario)=usuario.valorHechiceriaBase()
+
 }
 
-class EspejoFantastico{
+class CollarDivino inherits Artefacto{
+	
+	
+	override method valorLuchaDado(usuario)=1
+	override method valorHechiceriaDado(usuario)=1
+	
+}
 
-	var property oculto=false
+class EspejoFantastico inherits Artefacto{
+
+
 	var capoQueLaPosee
 	var lucha
 	var hechiceria
@@ -128,10 +132,10 @@ class EspejoFantastico{
 		method duenho(capo){
 			capoQueLaPosee=capo
 		}
-		method valorLuchaDado(_capo) = lucha
-		method valorHechiceriaDado(_capo) = hechiceria
-	method efecto(_capo){_capo.equipar(self) self.efectoEspejo()}
-	method ocultar(){ oculto=true }
+		override method valorLuchaDado(_capo) = lucha
+		override method valorHechiceriaDado(_capo) = hechiceria
+	    override method efecto(_capo){_capo.equipar(self) self.efectoEspejo()}
+	
 }
 
 class CofrecitoDeOro{

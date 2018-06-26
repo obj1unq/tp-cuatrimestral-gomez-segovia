@@ -2,16 +2,18 @@ import tpGrupal.*
 
 describe "test de capos y recursos" {
 	
-  
+    
 	var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 	var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
-	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{espadaDelDestino}, estaVivo=true)
-	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{ collarDivino }, estaVivo=true)
-	var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0)
+	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
+	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{  }, estaVivo=true)
+	var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0,oculto=false)
+	var espadaDelDestino=new EspadaDelDestino(oculto=false)
+	var collarDivino=new CollarDivino(oculto=false)
     var armadura = new Armadura()
     var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
-    var neblina = new Neblina()
+    
    
 
 test "Rolando"{
@@ -20,6 +22,7 @@ test "Rolando"{
 	assert.equals(1,rolando.valorLucha())
 	assert.equals(3,rolando.valorHechiceria())
 	assert.equals(0,rolando.equipo().size())
+
 }
 
 test "el Sur"{
@@ -42,7 +45,7 @@ test "aumentando poder Rolando"{
 }
 
 test "Caterina"{
-	
+	caterina.equipar(espadaDelDestino)
 	assert.equals(bandoDelSur,rolando.bando())
 	assert.equals(4,caterina.valorLucha())
 	assert.equals(3,caterina.valorHechiceria())
@@ -59,6 +62,7 @@ test "rolando encuentra algo"{
 
 test " Archibaldo"{
 	archibaldo.equipar(espejoFantastico)
+	archibaldo.equipar(collarDivino)
 	assert.equals(bandoDelNorte,archibaldo.bando())
 	assert.equals(3,archibaldo.valorLuchaBase())
 	assert.equals(3,archibaldo.valorHechiceriaBase())
@@ -86,7 +90,7 @@ test "rolando se encuentra a archibaldo" {
 		assert.notThat(rolando.estaVivo())
 	}
 	
-	test "caterina se encuentra con rolando" {
+test "caterina se encuentra con rolando" {
 		armadura.refuerzo(bendicion)
 		caterina.encontrar(armadura)
 		rolando.encontrar(caterina)
@@ -94,7 +98,8 @@ test "rolando se encuentra a archibaldo" {
 		assert.equals(4,rolando.valorHechiceria())
 		assert.equals(6,rolando.valorLucha())
 		assert.equals(0,caterina.equipo().size())	
-		}
+		
+}
 	
 	test "rolando se encuentra la armadura bendecida" {
 		armadura.refuerzo(bendicion)
