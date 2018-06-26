@@ -3,10 +3,10 @@ import wollok.game.*
 //Se hicieron correcciones esteticas y estructurales el funcionamiento sigue siendo el mismo
 
 program CapoTheGame {
-var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0,oculto=false)
-var espadaDelDestino=new EspadaDelDestino(oculto=false)
-var collarDivino=new CollarDivino(oculto=false)	
-var libroDeHechizos=new LibroDeHechizos(oculto=false)
+var espejoFantastico=new EspejoFantastico()
+var espadaDelDestino=new EspadaDelDestino()
+var collarDivino=new CollarDivino()	
+var libroDeHechizos=new LibroDeHechizos()
 var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
 var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)

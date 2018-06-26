@@ -8,9 +8,9 @@ describe "test de capos y recursos" {
 	var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
 	var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
 	var archibaldo = new Capo(bando = bandoDelNorte, lucha = 3, hechiceria = 3, equipo = #{  }, estaVivo=true)
-	var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0,oculto=false)
-	var espadaDelDestino=new EspadaDelDestino(oculto=false)
-	var collarDivino=new CollarDivino(oculto=false)
+	var espejoFantastico=new EspejoFantastico()
+	var espadaDelDestino=new EspadaDelDestino()
+	var collarDivino=new CollarDivino()
     var armadura = new Armadura()
     var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
     
@@ -94,9 +94,9 @@ test "caterina se encuentra con rolando" {
 		armadura.refuerzo(bendicion)
 		caterina.encontrar(armadura)
 		rolando.encontrar(caterina)
-		assert.equals(2,rolando.equipo().size())
+		assert.equals(1,rolando.equipo().size())
 		assert.equals(4,rolando.valorHechiceria())
-		assert.equals(6,rolando.valorLucha())
+		assert.equals(3,rolando.valorLucha())
 		assert.equals(0,caterina.equipo().size())	
 		
 }

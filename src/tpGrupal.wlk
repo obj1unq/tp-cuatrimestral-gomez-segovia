@@ -7,7 +7,7 @@ class Capo{
 	var bando
 	var property posicion = game.at(1, 1)
 	var property estaVivo= true
-	var property oculto=false
+
 	
 	method darTodoEquipo(capo){
 		capo.equipo().addAll(self.equipo())
@@ -64,18 +64,17 @@ class Capo{
 	method bando()= bando
 	
 
-	method ocultar(){ oculto=true }
+	
 	
 	method imagen() = "jugador.png"
 	
 }
 class Artefacto{
-	var property oculto
 	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(usuario)
 	method valorHechiceriaDado(usuario)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
-	method ocultar(){ oculto=true }
+	
 }
 
 
@@ -107,74 +106,82 @@ class CollarDivino inherits Artefacto{
 class EspejoFantastico inherits Artefacto{
 
 
-	var capoQueLaPosee
-	var lucha
-	var hechiceria
 	
-	method artefactosPosibles(){
-		return capoQueLaPosee.equipo().filter({artefacto=>!artefacto==self})
+	method artefactosPosibles(capo){
+		return capo.equipo().filter({artefacto=>!artefacto==self})
 	}
-	method mejorObjeto(){
-		return(self.artefactosPosibles().max({artefacto=>artefacto.totalPoder(capoQueLaPosee)}))
+	method mejorObjeto(capo){
+		return(self.artefactosPosibles(capo).max({artefacto=>artefacto.totalPoder(capo)}))
 	}
-	method capoSinArtefactos(){
-		return self.artefactosPosibles().isEmpty()
+	method capoSinArtefactos(capo){
+		return self.artefactosPosibles(capo).isEmpty()
 	}
-	method efectoEspejo(){
-		if(self.capoSinArtefactos()){
-			lucha=0
-			hechiceria=0
+	
+		
+		override method valorLuchaDado(_capo){
+			return(if(self.capoSinArtefactos(_capo)){
+			0
+			
+			
 		}
 		else{
-			lucha=self.mejorObjeto().valorLuchaDado(capoQueLaPosee)
-			hechiceria=self.mejorObjeto().valorHechiceriaDado(capoQueLaPosee)
+			self.mejorObjeto(_capo).valorLuchaDado(_capo)
+			
+		})
 		}
-	}
 		
-		method duenho(capo){
-			capoQueLaPosee=capo
+		
+		override method valorHechiceriaDado(_capo){
+			return(
+		if(self.capoSinArtefactos(_capo)){
+			0
+			
 		}
-		override method valorLuchaDado(_capo) = lucha
-		override method valorHechiceriaDado(_capo) = hechiceria
-	    override method efecto(_capo){_capo.equipar(self) self.efectoEspejo()}
+		else{
+			
+			self.mejorObjeto(_capo).valorHechiceriaDado(_capo)
+			
+		})
+		}
+	    override method efecto(_capo){_capo.equipar(self)}
 	
 }
 
 class CofrecitoDeOro{
 	var property valor=100
-	var property oculto=false
+	
 	method efecto(capo){
 		capo.bando().ganarOro(valor)
 	}
-	method ocultar(){ oculto=true }
+	
 }
 class CumuloDeCarbon{
 	var property valor=50
-	var property oculto=false
+
 	method efecto(capo){
 		capo.bando().ganarRecursos(valor)
 	}
-	method ocultar(){ oculto=true }
+
 }
 
 class ViejoSabio{
 	var valorLuchaDado=ayudanteDelSabio.valorDeLucha()
-	var property oculto=false
+
 	var valorHechiceriaDado=1
 	
 	method efecto(capo){
 		capo.entrenarMente(valorHechiceriaDado)
 		capo.entrenarCuerpo(valorLuchaDado)
 	}
-	method ocultar(){ oculto=true }
+
 	method imagen() = "pepona.png"
 }
 
 object ayudanteDelSabio {
 
  var property valorDeLucha = 1
- var property oculto=false
- method ocultar(){ oculto=true }
+
+ 
 
 }
 
@@ -200,10 +207,10 @@ class Armadura{
 	var refuerzo = noReforzar
 	var valorLuchaBase=2
 	var valorHechiceriaBase=0
-	var property oculto=false
+
 	
 	method refuerzo(_refuerzo){refuerzo=_refuerzo}
-	method ocultar(){ oculto=true }
+
 	method efecto(_capo){_capo.equipar(self)}
 	method valorLuchaDado(_capo) = valorLuchaBase + refuerzo.valorLuchaDado(_capo)
 	method totalPoder(usuario)=self.valorLuchaDado(usuario)+self.valorHechiceriaDado(usuario)
@@ -248,7 +255,7 @@ class Neblina{
 		interior.add(_objeto)
 		
 	
-		_objeto.ocultar() 
+		
 	}
 	method efecto(_capo){_capo.equipo().addAll(interior)}
 }
