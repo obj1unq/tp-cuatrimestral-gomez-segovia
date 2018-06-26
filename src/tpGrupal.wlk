@@ -1,5 +1,3 @@
-
-
 class Capo{
 	var property equipo= #{}
 	var lucha=3
@@ -9,20 +7,22 @@ class Capo{
 	var property estaVivo= true
 	var property oculto=false
 	
-
-	
 	method darTodoEquipo(capo){
 		capo.equipo().addAll(self.equipo())
+		self.equipo().clear()
 	}
 	method estoyMuerto(){
 		estaVivo=false
+		game.removeVisual(self)
+	}
+	method estoyVivo(){
+		estaVivo=true
 	}
 	method enfrentamiento(capo){
 		if(capo.valorLucha()+capo.valorHechiceria()>self.valorLucha()+self.valorHechiceria()){
 			self.estoyMuerto()
 		}
 		else{
-			estaVivo=true
 			capo.estoyMuerto()
 		}
 	}
@@ -35,6 +35,7 @@ class Capo{
 			self.enfrentamiento(capo)
 		}
 	}
+	
 	method valorLuchaBase()= lucha
 	
 	method valorHechiceriaBase()= hechiceria

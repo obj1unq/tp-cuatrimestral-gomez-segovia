@@ -89,11 +89,11 @@ test "rolando se encuentra a archibaldo" {
 	test "caterina se encuentra con rolando" {
 		armadura.refuerzo(bendicion)
 		caterina.encontrar(armadura)
-		caterina.encontrar(rolando)
-		assert.that(rolando.equipo().size() == 1)
-		assert.that(rolando.valorHechiceria() == 4)
-		assert.that(rolando.valorLucha() == 3)
-		assert.that(caterina.equipo().size() == 0)	
+		rolando.encontrar(caterina)
+		assert.equals(2,rolando.equipo().size())
+		assert.equals(4,rolando.valorHechiceria())
+		assert.equals(6,rolando.valorLucha())
+		assert.equals(0,caterina.equipo().size())	
 		}
 	
 	test "rolando se encuentra la armadura bendecida" {
@@ -110,12 +110,12 @@ test "rolando se encuentra a archibaldo" {
 	}
 	
 	test "rolando se encuentra con el viejo sabio la armadura bendecida, caterina y archibaldo" {
-		viejoSabio.efecto(rolando)
+		rolando.encontrar(viejoSabio)
 		armadura.refuerzo(bendicion)
-		armadura.efecto(rolando)
-		caterina.efecto(rolando)
-		archibaldo.efecto(rolando) 
-		assert.notThat(archibaldo.estaVivo())		
+		rolando.encontrar(armadura)
+		rolando.encontrar(caterina)
+		rolando.encontrar(archibaldo)
+		assert.notThat(archibaldo.estaVivo())
 	}
 	
 	test "rolando encuentra cosas "{

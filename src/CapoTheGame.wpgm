@@ -1,17 +1,16 @@
 import tpGrupal.*
 import wollok.game.*
 
-// TODO ¿Notaron que su juego no anda?
 program CapoTheGame {
-var espejoFantastico=new EspejoFantastico(capoQueLaPosee=archibaldo,lucha=0,hechiceria=0)
+	
 var bandoDelSur = new Bandos (tesoro = 100, reservaDeMateriales = 50)
 var bandoDelNorte = new Bandos (tesoro = 200, reservaDeMateriales = 200)
 var rolando = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{} , estaVivo=true)
-var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{}, estaVivo=true)
+var caterina = new Capo( bando = bandoDelSur, lucha = 1, hechiceria = 3, equipo = #{libroDeHechizos}, estaVivo=true)
 var archibaldo = new Capo( bando = bandoDelNorte, lucha = 1, hechiceria = 3, estaVivo=true, equipo = #{ collarDivino})
 var armadura = new Armadura()
 var viejoSabio = new ViejoSabio(valorHechiceriaDado = 1)
-archibaldo.equipar(espejoFantastico)
+archibaldo.equipar(espadaDelDestino)
 //var neblina = new Neblina()
 
 //	CONFIG	
@@ -20,25 +19,32 @@ archibaldo.equipar(espejoFantastico)
 	game.width(10)
 	game.ground("suelo.png")
 
+
 //	VISUALES
 	game.addVisualIn(caterina, game.at(5,2))
 	game.addVisualIn(archibaldo, game.at(8,7))
 	game.addVisualIn(armadura, game.at(3,2))
-	game.addVisualIn(viejoSabio, game.at(1,8))
+	game.addVisualIn(viejoSabio, game.at(1,7))
 	game.addVisualCharacter(rolando)
 	
 //	TECLADO
-//	A.onPressDo{ pepita.come(alpiste) }
-//	M.onPressDo{ pepita.come(manzana) }
 	H.onPressDo { game.say(rolando, "Hola") }
-//	V.onPressDo { pepita.volaHacia(villaGesell) }
-//	B.onPressDo { pepita.volaHacia(buenosAires) }
-	
+	E.onPressDo { game.say(rolando, rolando.equipo()) }
+	T.onPressDo { game.say(rolando, "Rolando")
+				  game.say(caterina, "Caterina")
+				  game.say(archibaldo, "Archibaldo")
+				  game.say(viejoSabio, "Viejo Sabio")
+				  game.say(armadura, "Armadura") }
+	R.onPressDo { 
+		if (not rolando.estaVivo()) {
+			game.addVisualCharacterIn(rolando, game.at(1,1))
+			rolando.estoyVivo() 
+		}
+	}
+
 	game.whenCollideDo(rolando, {
 		algo => algo.efecto(rolando)
 	})
-	
-//	UP.onPressDo{ rolando.move(game.at(pepita.posicion().x(), pepita.posicion().y()+1))}
 	
 //	START
 	game.start()
